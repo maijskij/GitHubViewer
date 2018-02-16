@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">GithubViewer</string>
+    <string name="data_load_exception_error">Offline data!</string>
+</resources>
