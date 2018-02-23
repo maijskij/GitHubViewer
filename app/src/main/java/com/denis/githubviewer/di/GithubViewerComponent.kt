@@ -1,6 +1,6 @@
 package com.denis.githubviewer.di
 
-import com.denis.githubviewer.ReposListFragment
+import com.denis.githubviewer.feature.reposlist.ReposListFragment
 import dagger.Component
 import javax.inject.Singleton
 

@@ -1,6 +1,5 @@
-package com.denis.githubviewer.api
+package com.denis.githubviewer.data.github
 
-import com.denis.githubviewer.github.GitHubRepo
 import retrofit2.Call
 import javax.inject.Inject
 

@@ -1,10 +1,10 @@
-package com.denis.githubviewer.adapter
+package com.denis.githubviewer.feature.reposlist.adapter
 
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.denis.githubviewer.R
-import com.denis.githubviewer.github.GitHubRepo
+import com.denis.githubviewer.data.github.GitHubRepo
 import kotlinx.android.synthetic.main.item_repo.view.*
 
 class ReposDelegateAdapter : ViewTypeDelegateAdapter {

@@ -1,7 +1,8 @@
-package com.denis.githubviewer.github
+package com.denis.githubviewer.feature.reposlist
 
-import com.denis.githubviewer.api.DbApi
-import com.denis.githubviewer.api.GithubApi
+import com.denis.githubviewer.data.realm.DbApi
+import com.denis.githubviewer.data.github.GithubApi
+import com.denis.githubviewer.data.github.GitHubRepo
 import ru.gildor.coroutines.retrofit.awaitResult
 import javax.inject.Inject
 

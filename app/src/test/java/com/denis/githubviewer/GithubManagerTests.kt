@@ -1,10 +1,10 @@
 package com.denis.githubviewer
 
 
-import com.denis.githubviewer.api.DbApi
-import com.denis.githubviewer.api.GithubApi
-import com.denis.githubviewer.github.GitHubRepo
-import com.denis.githubviewer.github.GithubManager
+import com.denis.githubviewer.data.realm.DbApi
+import com.denis.githubviewer.data.github.GithubApi
+import com.denis.githubviewer.data.github.GitHubRepo
+import com.denis.githubviewer.feature.reposlist.GithubManager
 import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.whenever
 import junit.framework.Assert.assertEquals
@@ -79,7 +79,7 @@ class GithubManagerTests {
         }
     }
 
-    private fun List<GitHubRepo>.mockApiCall(apiMock: GithubApi ) {
+    private fun List<GitHubRepo>.mockApiCall(apiMock: GithubApi) {
         val callMock = MockedCall<List<GitHubRepo>>(this)
         com.nhaarman.mockito_kotlin.whenever(apiMock.getData(com.nhaarman.mockito_kotlin.any(), com.nhaarman.mockito_kotlin.any())).thenReturn(callMock)
     }

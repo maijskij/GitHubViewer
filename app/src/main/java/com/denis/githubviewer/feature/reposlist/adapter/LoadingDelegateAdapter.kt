@@ -1,4 +1,4 @@
-package com.denis.githubviewer.adapter
+package com.denis.githubviewer.feature.reposlist.adapter
 
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater

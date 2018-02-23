@@ -1,9 +1,9 @@
-package com.denis.githubviewer.github
+package com.denis.githubviewer.data.github
 
 import android.os.Parcel
 import android.os.Parcelable
-import com.denis.githubviewer.adapter.AdapterConstants
-import com.denis.githubviewer.adapter.ViewType
+import com.denis.githubviewer.feature.reposlist.adapter.AdapterConstants
+import com.denis.githubviewer.feature.reposlist.adapter.ViewType
 
 data class GitHubRepo(
         val name: String

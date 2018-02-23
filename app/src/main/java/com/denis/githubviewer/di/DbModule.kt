@@ -1,7 +1,7 @@
 package com.denis.githubviewer.di
 
-import com.denis.githubviewer.api.DbApi
-import com.denis.githubviewer.realm.RealmStorage
+import com.denis.githubviewer.data.realm.DbApi
+import com.denis.githubviewer.data.realm.RealmStorage
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton

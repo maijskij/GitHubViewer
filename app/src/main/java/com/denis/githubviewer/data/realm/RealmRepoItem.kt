@@ -1,4 +1,4 @@
-package com.denis.githubviewer.realm
+package com.denis.githubviewer.data.realm
 
 import io.realm.RealmObject
 

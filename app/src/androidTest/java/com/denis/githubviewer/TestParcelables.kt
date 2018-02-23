@@ -2,7 +2,7 @@ package com.denis.githubviewer
 
 import android.os.Parcel
 import android.support.test.runner.AndroidJUnit4
-import com.denis.githubviewer.github.GitHubRepo
+import com.denis.githubviewer.data.github.GitHubRepo
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.junit.runner.RunWith

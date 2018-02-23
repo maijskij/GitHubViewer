@@ -1,7 +1,8 @@
-package com.denis.githubviewer
+package com.denis.githubviewer.feature.reposlist
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import com.denis.githubviewer.R
 
 class MainActivity : AppCompatActivity() {
 
@@ -12,7 +13,7 @@ class MainActivity : AppCompatActivity() {
 
         if (savedInstanceState == null) {
             val ft = supportFragmentManager.beginTransaction()
-            ft.add(R.id.fragment_container,ReposListFragment())
+            ft.add(R.id.fragment_container, ReposListFragment())
             ft.commit()
         }
     }

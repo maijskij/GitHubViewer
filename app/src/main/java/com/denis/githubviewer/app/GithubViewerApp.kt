@@ -1,4 +1,4 @@
-package com.denis.githubviewer
+package com.denis.githubviewer.app
 
 import android.app.Application
 import com.denis.githubviewer.di.DaggerGithubViewerComponent

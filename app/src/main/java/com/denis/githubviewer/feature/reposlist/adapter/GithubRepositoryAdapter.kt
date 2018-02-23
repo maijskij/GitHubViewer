@@ -1,9 +1,9 @@
-package com.denis.githubviewer.adapter
+package com.denis.githubviewer.feature.reposlist.adapter
 
 import android.support.v4.util.SparseArrayCompat
 import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
-import com.denis.githubviewer.github.GitHubRepo
+import com.denis.githubviewer.data.github.GitHubRepo
 
 class GithubRepositoryAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 

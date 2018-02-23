@@ -1,8 +1,8 @@
 package com.denis.githubviewer.di
 
-import com.denis.githubviewer.api.GithubApi
-import com.denis.githubviewer.api.GithubRestApi
-import com.denis.githubviewer.api.JakeWhartonReposApi
+import com.denis.githubviewer.data.github.GithubApi
+import com.denis.githubviewer.data.github.GithubRestApi
+import com.denis.githubviewer.data.github.JakeWhartonReposApi
 import dagger.Module
 import dagger.Provides
 import retrofit2.Retrofit

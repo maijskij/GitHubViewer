@@ -1,4 +1,4 @@
-package com.denis.githubviewer
+package com.denis.githubviewer.feature.reposlist
 
 import android.os.Bundle
 import android.os.Parcelable
@@ -8,10 +8,11 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.denis.githubviewer.adapter.GithubRepositoryAdapter
-import com.denis.githubviewer.adapter.PaginatedScrollListener
-import com.denis.githubviewer.github.GitHubRepo
-import com.denis.githubviewer.github.GithubManager
+import com.denis.githubviewer.R
+import com.denis.githubviewer.feature.reposlist.adapter.GithubRepositoryAdapter
+import com.denis.githubviewer.feature.reposlist.adapter.PaginatedScrollListener
+import com.denis.githubviewer.app.GithubViewerApp
+import com.denis.githubviewer.data.github.GitHubRepo
 import kotlinx.android.synthetic.main.fragment_repos.*
 import kotlinx.coroutines.experimental.Job
 import kotlinx.coroutines.experimental.android.UI
