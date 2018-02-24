@@ -1,5 +1,6 @@
 package com.denis.githubviewer.data.realm
 
+import com.denis.githubviewer.data.DbApi
 import com.denis.githubviewer.data.github.GitHubRepo
 import io.realm.Realm
 import io.realm.kotlin.createObject

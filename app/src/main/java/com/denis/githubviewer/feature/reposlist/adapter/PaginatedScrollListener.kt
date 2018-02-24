@@ -4,11 +4,12 @@ package com.denis.githubviewer.feature.reposlist.adapter
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 
-abstract class PaginatedScrollListener(val loadMoreItems: () -> Unit, var layoutManager: LinearLayoutManager) : RecyclerView.OnScrollListener() {
-    abstract fun isLoading() : Boolean
-    abstract fun isLastPage() : Boolean
+class PaginatedScrollListener(val loadMoreItems: () -> Unit, var layoutManager: LinearLayoutManager) : RecyclerView.OnScrollListener() {
 
-    private var visibleThreshold = 3
+    companion object {
+        private const val VISIBLE_THRESHOLD = 3
+    }
+
     private var firstVisibleItemPosition = 0
     private var visibleItemCount = 0
     private var totalItemCount = 0
@@ -24,13 +25,13 @@ abstract class PaginatedScrollListener(val loadMoreItems: () -> Unit, var layout
             totalItemCount = layoutManager.itemCount
             firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition()
 
-            if (!isLoading() && !isLastPage() && thresholdExceeded() && firstVisibleItemPosition >= 0) {
+            if ( thresholdExceeded() && firstVisibleItemPosition >= 0 ) {
                 loadMoreItems();
             }
         }
     }
 
     private fun thresholdExceeded() : Boolean =
-            (visibleItemCount + firstVisibleItemPosition) >= (totalItemCount - visibleThreshold)
+            (visibleItemCount + firstVisibleItemPosition) >= (totalItemCount - VISIBLE_THRESHOLD)
 
 }

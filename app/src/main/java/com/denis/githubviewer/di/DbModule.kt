@@ -1,6 +1,6 @@
 package com.denis.githubviewer.di
 
-import com.denis.githubviewer.data.realm.DbApi
+import com.denis.githubviewer.data.DbApi
 import com.denis.githubviewer.data.realm.RealmStorage
 import dagger.Module
 import dagger.Provides

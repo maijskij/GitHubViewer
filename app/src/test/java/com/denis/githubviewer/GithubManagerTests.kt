@@ -1,10 +1,9 @@
 package com.denis.githubviewer
 
 
-import com.denis.githubviewer.data.realm.DbApi
+import com.denis.githubviewer.data.DbApi
 import com.denis.githubviewer.data.github.GithubApi
 import com.denis.githubviewer.data.github.GitHubRepo
-import com.denis.githubviewer.feature.reposlist.GithubManager
 import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.whenever
 import junit.framework.Assert.assertEquals

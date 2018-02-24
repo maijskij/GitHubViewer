@@ -1,4 +1,4 @@
-package com.denis.githubviewer.data.realm
+package com.denis.githubviewer.data
 
 import com.denis.githubviewer.data.github.GitHubRepo
 

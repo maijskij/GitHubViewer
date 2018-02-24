@@ -7,7 +7,7 @@ import android.support.test.espresso.matcher.ViewMatchers.isDisplayed
 import android.support.test.espresso.matcher.ViewMatchers.withId
 import android.support.test.rule.ActivityTestRule
 import android.support.test.runner.AndroidJUnit4
-import com.denis.githubviewer.feature.reposlist.MainActivity
+import com.denis.githubviewer.feature.reposlist.ReposListActivity
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -18,7 +18,7 @@ import org.junit.runner.RunWith
 class TestViews {
 
     @Rule @JvmField
-    val activityActivityTestRule = ActivityTestRule<MainActivity>(MainActivity::class.java)
+    val activityActivityTestRule = ActivityTestRule<ReposListActivity>(ReposListActivity::class.java)
 
     @Test
     fun testReposRecycleViewIsDisplayed() {

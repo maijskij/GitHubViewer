@@ -1,6 +1,7 @@
 package com.denis.githubviewer.di
 
 import com.denis.githubviewer.feature.reposlist.ReposListFragment
+import com.denis.githubviewer.feature.reposlist.ReposListPresenter
 import dagger.Component
 import javax.inject.Singleton
 
@@ -10,6 +11,6 @@ import javax.inject.Singleton
         NetworkModule::class,
         DbModule::class)
 )
-interface GithubViewerComponent {
-    fun inject(reposFragment: ReposListFragment)
+interface ApplicationComponent {
+    fun inject(reposListPresenter: ReposListPresenter)
 }
