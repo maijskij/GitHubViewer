@@ -1,89 +1,67 @@
 package com.denis.githubviewer.feature.reposlist
 
-import com.denis.githubviewer.App
 import com.denis.githubviewer.data.github.GitHubRepo
 import com.denis.githubviewer.data.github.GithubApi
-import com.denis.githubviewer.data.DbApi
-import kotlinx.coroutines.experimental.Job
-import kotlinx.coroutines.experimental.android.UI
-import kotlinx.coroutines.experimental.launch
+import com.denis.githubviewer.data.db.DbApi
 import ru.gildor.coroutines.retrofit.awaitResult
-import javax.inject.Inject
 
-class ReposListPresenter(private val view: ReposListContract.View) :ReposListContract.UserActionsListener {
-
+class ReposListPresenter(private val view: ReposListContract.View,
+                         private val db: DbApi,
+                         private val api: GithubApi)
+    : ReposListContract.UserActionsListener {
 
     companion object {
         private const val STARTING_PAGE = 1
     }
 
-    @Inject
-    lateinit var api: GithubApi
-
-    @Inject
-    lateinit var db: DbApi
-
-    private var job: Job? = null
-
     // starting values
-    private var isLoading:  Boolean = false
+    private var isLoading: Boolean = false
     private var isLastPage: Boolean = false
     private var pageToLoad: Int = STARTING_PAGE
 
-
-    init{
-        App.component.inject( this )
-    }
-
-    override fun loadData() {
+    override suspend fun loadData() {
 
         if (isLastPage || isLoading) return
 
-        job = launch(UI) {
 
-            isLoading = true
-            view.setProgressIndicator(true)
+        isLoading = true
+        view.setProgressIndicator(true)
 
-            var newData: List<GitHubRepo>
+        var newData: List<GitHubRepo>
 
-            try {
-                newData = getOnlineData(pageToLoad)
+        try {
+            newData = getOnlineData(pageToLoad)
 
-                pageToLoad += 1
+            pageToLoad += 1
 
-                if (newData.isEmpty()) {
-                    isLastPage = true
+            if (newData.isEmpty()) {
+                isLastPage = true
 
-                } else {
+            } else {
 
-                    if (isOnlyFirstPageLoaded()) {
-                        // first time successful network request
-                        // clean all offline data from DB
-                        db.eraseOfflineData()
-                        view.clearData()
-                    }
-
-                    // save new data in DB
-                    db.saveData(newData)
-                    view.addData(newData)
+                if (isOnlyFirstPageLoaded()) {
+                    // first time successful network request
+                    // clean all offline data from DB
+                    db.eraseOfflineData()
+                    view.clearData()
                 }
-            } catch (e: Throwable) {
 
-                newData = db.getOfflineData()
-                view.clearData()
+                // save new data in DB
+                db.saveData(newData)
                 view.addData(newData)
-                view.showSnackbar( e.message.orEmpty(), {loadData()} )
             }
+        } catch (e: Throwable) {
 
-            view.setProgressIndicator(false)
-            isLoading = false
+            newData = db.getOfflineData()
+            view.clearData()
+            view.addData(newData)
+            view.showSnackbar(e.message.orEmpty())
         }
 
-    }
+        view.setProgressIndicator(false)
+        isLoading = false
 
-    override fun cancelLoad() {
-        job?.cancel()
-        job = null
+
     }
 
     private suspend fun getOnlineData(page: Int, perPage: Int = 15): List<GitHubRepo> {

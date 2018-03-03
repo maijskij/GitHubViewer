@@ -1,14 +1,14 @@
 package com.denis.githubviewer
 
 import android.app.Application
-import com.denis.githubviewer.di.ApplicationComponent
-import com.denis.githubviewer.di.DaggerApplicationComponent
+import com.denis.githubviewer.feature.reposlist.DaggerReposListComponent
+import com.denis.githubviewer.feature.reposlist.ReposListComponent
 import io.realm.Realm
 
 class App : Application() {
 
     companion object {
-        lateinit var component: ApplicationComponent
+        lateinit var reposListComponent: ReposListComponent
     }
 
     override fun onCreate() {
@@ -18,6 +18,6 @@ class App : Application() {
         Realm.init(this);
 
         // Dagger2
-        component = DaggerApplicationComponent.builder().build()
+        reposListComponent = DaggerReposListComponent.builder().build()
     }
 }

@@ -5,7 +5,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
 import com.denis.githubviewer.data.github.GitHubRepo
 
-class GithubRepositoryAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class GithubRepositoryAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     var showLoadingItem: Boolean = true
         set(value){
@@ -26,7 +26,7 @@ class GithubRepositoryAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>(
     init {
 
         delegateAdapters.put(AdapterConstants.LOADING, LoadingDelegateAdapter())
-        delegateAdapters.put(AdapterConstants.REPOS, ReposDelegateAdapter())
+        delegateAdapters.put(AdapterConstants.DATA, ReposDelegateAdapter())
         items = java.util.ArrayList()
         items.add(loadingItem)
     }
@@ -60,7 +60,7 @@ class GithubRepositoryAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>(
 
     fun getData(): List<GitHubRepo> =
             items
-                    .filter { it.getViewType() == AdapterConstants.REPOS }
+                    .filter { it.getViewType() == AdapterConstants.DATA }
                     .map { it as GitHubRepo }
 
 

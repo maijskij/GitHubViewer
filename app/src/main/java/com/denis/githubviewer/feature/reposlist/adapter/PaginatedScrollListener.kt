@@ -4,7 +4,7 @@ package com.denis.githubviewer.feature.reposlist.adapter
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 
-class PaginatedScrollListener(val loadMoreItems: () -> Unit, var layoutManager: LinearLayoutManager) : RecyclerView.OnScrollListener() {
+class PaginatedScrollListener(private val loadMoreItems: () -> Unit, var layoutManager: LinearLayoutManager) : RecyclerView.OnScrollListener() {
 
     companion object {
         private const val VISIBLE_THRESHOLD = 3
@@ -26,7 +26,7 @@ class PaginatedScrollListener(val loadMoreItems: () -> Unit, var layoutManager: 
             firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition()
 
             if ( thresholdExceeded() && firstVisibleItemPosition >= 0 ) {
-                loadMoreItems();
+                loadMoreItems()
             }
         }
     }

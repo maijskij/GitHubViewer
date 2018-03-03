@@ -11,7 +11,7 @@ data class GitHubRepo(
 
     // ViewType
     override fun getViewType(): Int =
-            AdapterConstants.REPOS
+            AdapterConstants.DATA
 
     // Parcelable
     constructor(parcel: Parcel) : this(parcel.readString())

@@ -7,13 +7,18 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.denis.githubviewer.App
 import com.denis.githubviewer.R
+import com.denis.githubviewer.data.db.DbApi
 import com.denis.githubviewer.feature.reposlist.adapter.GithubRepositoryAdapter
 import com.denis.githubviewer.feature.reposlist.adapter.PaginatedScrollListener
 import com.denis.githubviewer.data.github.GitHubRepo
-import com.denis.githubviewer.utils.putParcelableList
+import com.denis.githubviewer.data.github.GithubApi
 import kotlinx.android.synthetic.main.fragment_repos.*
-
+import kotlinx.coroutines.experimental.Job
+import kotlinx.coroutines.experimental.android.UI
+import kotlinx.coroutines.experimental.launch
+import javax.inject.Inject
 
 
 class ReposListFragment: Fragment(), ReposListContract.View {
@@ -26,11 +31,21 @@ class ReposListFragment: Fragment(), ReposListContract.View {
 
     private lateinit var actionsListener: ReposListContract.UserActionsListener
 
+    @Inject
+    lateinit var dbApi: DbApi
+
+    @Inject
+    lateinit var gitHubApi: GithubApi
+
+    private var job: Job? = null
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        App.reposListComponent.inject( this )
         reposAdapter = GithubRepositoryAdapter()
-        actionsListener = ReposListPresenter(this)
+        actionsListener = ReposListPresenter(this, dbApi, gitHubApi)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -47,33 +62,33 @@ class ReposListFragment: Fragment(), ReposListContract.View {
             layoutManager = layout
 
             clearOnScrollListeners()
-            addOnScrollListener(PaginatedScrollListener({actionsListener.loadData()}, layout))
+            addOnScrollListener(PaginatedScrollListener({requestData()}, layout))
 
             adapter = reposAdapter
         }
 
         if (savedInstanceState != null && savedInstanceState.containsKey(KEY_DATA_LIST)) {
-
-            val list   = savedInstanceState.get(KEY_DATA_LIST) as ArrayList<*>
-            val dataList: List<GitHubRepo>  = list.filterIsInstance<GitHubRepo>()
-            reposAdapter.add(dataList)
+            val list: List<GitHubRepo>  = savedInstanceState.getParcelableArrayList(KEY_DATA_LIST)
+            reposAdapter.add(list)
 
         } else {
-            actionsListener.loadData()
+           requestData()
         }
     }
 
     override fun onPause() {
         super.onPause()
 
-        actionsListener.cancelLoad()
+        job?.cancel()
+        job = null
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
+
         val data = reposAdapter.getData()
         if ( data.isNotEmpty() ) {
-            outState.putParcelableList(KEY_DATA_LIST, data)
+            outState.putParcelableArrayList(KEY_DATA_LIST, ArrayList<GitHubRepo>(data))
         }
     }
 
@@ -85,13 +100,19 @@ class ReposListFragment: Fragment(), ReposListContract.View {
         reposAdapter.add(data)
     }
 
-    override fun showSnackbar(msg: String, retry: () -> Unit) {
-        Snackbar.make(list, msg , Snackbar.LENGTH_LONG)
-                .setAction("RETRY") { retry }
-                .show()
-    }
+    override fun showSnackbar(msg: String) =
+            Snackbar.make(list, msg , Snackbar.LENGTH_LONG)
+                    .setAction("RETRY") { requestData() }
+                    .show()
 
     override fun setProgressIndicator(active: Boolean) {
         reposAdapter.showLoadingItem = active
     }
+
+    private fun requestData(){
+        job = launch(UI) {
+            actionsListener.loadData()
+        }
+    }
+
 }

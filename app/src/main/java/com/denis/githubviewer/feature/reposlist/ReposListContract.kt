@@ -12,12 +12,11 @@ interface ReposListContract {
 
         fun clearData()
 
-        fun showSnackbar(msg: String, retry: () -> Unit)
+        fun showSnackbar(msg: String)
     }
 
     interface UserActionsListener {
 
-        fun loadData()
-        fun cancelLoad()
+        suspend fun loadData()
     }
 }
