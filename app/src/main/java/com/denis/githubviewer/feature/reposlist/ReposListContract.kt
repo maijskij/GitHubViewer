@@ -13,6 +13,8 @@ interface ReposListContract {
         fun clearData()
 
         fun showSnackbar(msg: String)
+
+        fun hasNoData(): Boolean
     }
 
     interface UserActionsListener {

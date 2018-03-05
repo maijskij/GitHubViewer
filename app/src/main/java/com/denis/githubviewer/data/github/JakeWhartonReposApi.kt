@@ -8,7 +8,7 @@ interface JakeWhartonReposApi {
 
     //https://api.github.com/users/JakeWharton/repos?page=1&per_page=15
 
-    @GET("users/JakeWharton/repos")
+    @GET("users/google/repos")
     fun getRepos(@Query("page") page: Int,
                  @Query("per_page") perPage: Int): Call<List<GitHubRepo>>
 }

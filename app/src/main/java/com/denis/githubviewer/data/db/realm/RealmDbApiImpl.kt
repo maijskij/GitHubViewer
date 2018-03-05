@@ -11,26 +11,28 @@ class RealmDbApiImpl : DbApi {
 
     override suspend fun eraseOfflineData() =
             async {
-                // Realm implements the Closable interface,
-                // therefore we can make use of Kotlin's built-in
-                // extension method 'use'.
-                Realm.getDefaultInstance().use {
-                    it.executeTransaction {
-                        it.deleteAll()
+                val realm = Realm.getDefaultInstance()
+                try {
+                    realm.executeTransaction {
+                        realm.deleteAll()
                     }
+                } finally {
+                    realm.close()
                 }
 
             }.await()
 
     override suspend fun saveData(data: List<GitHubRepo>) = async {
-
-        Realm.getDefaultInstance().use {
-            it.executeTransaction {
+        val realm = Realm.getDefaultInstance()
+        try {
+            realm.executeTransaction {
                 for (item in data) {
-                    val repo = it.createObject<RealmRepoItem>()
+                    val repo = realm.createObject<RealmRepoItem>()
                     repo.name = item.name
                 }
             }
+        } finally {
+            realm.close()
         }
     }.await()
 
@@ -40,13 +42,18 @@ class RealmDbApiImpl : DbApi {
         val offlineData = ArrayList<GitHubRepo>()
         async {
 
+            // Realm implements the Closable interface,
+            // therefore we can make use of Kotlin's built-in
+            // extension method 'use'.
             Realm.getDefaultInstance().use {
+
                 offlineData.addAll(
                         it
                                 .where<RealmRepoItem>()
                                 .findAll()
                                 .map { GitHubRepo(it.name ?: "") }
                 )
+
             }
 
 

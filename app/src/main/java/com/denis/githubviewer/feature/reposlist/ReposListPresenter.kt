@@ -7,7 +7,7 @@ import ru.gildor.coroutines.retrofit.awaitResult
 
 class ReposListPresenter(private val view: ReposListContract.View,
                          private val db: DbApi,
-                         private val api: GithubApi)
+                         private val gitHubApi: GithubApi)
     : ReposListContract.UserActionsListener {
 
     companion object {
@@ -27,10 +27,8 @@ class ReposListPresenter(private val view: ReposListContract.View,
         isLoading = true
         view.setProgressIndicator(true)
 
-        var newData: List<GitHubRepo>
-
         try {
-            newData = getOnlineData(pageToLoad)
+            val newData = getOnlineData(pageToLoad)
 
             pageToLoad += 1
 
@@ -52,9 +50,10 @@ class ReposListPresenter(private val view: ReposListContract.View,
             }
         } catch (e: Throwable) {
 
-            newData = db.getOfflineData()
-            view.clearData()
-            view.addData(newData)
+            if ( view.hasNoData() ){
+
+                view.addData( db.getOfflineData() )
+            }
             view.showSnackbar(e.message.orEmpty())
         }
 
@@ -66,7 +65,7 @@ class ReposListPresenter(private val view: ReposListContract.View,
 
     private suspend fun getOnlineData(page: Int, perPage: Int = 15): List<GitHubRepo> {
 
-        val result = api.getData(page, perPage).awaitResult()
+        val result = gitHubApi.getData(page, perPage).awaitResult()
 
         return when (result) {
 

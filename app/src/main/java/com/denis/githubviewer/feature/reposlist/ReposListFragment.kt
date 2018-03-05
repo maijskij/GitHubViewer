@@ -109,6 +109,10 @@ class ReposListFragment: Fragment(), ReposListContract.View {
         reposAdapter.showLoadingItem = active
     }
 
+    override fun hasNoData(): Boolean {
+        return reposAdapter.getData().isEmpty()
+    }
+
     private fun requestData(){
         job = launch(UI) {
             actionsListener.loadData()

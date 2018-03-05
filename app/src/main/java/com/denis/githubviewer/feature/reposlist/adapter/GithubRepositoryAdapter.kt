@@ -2,19 +2,25 @@ package com.denis.githubviewer.feature.reposlist.adapter
 
 import android.support.v4.util.SparseArrayCompat
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.ViewGroup
 import com.denis.githubviewer.data.github.GitHubRepo
+import io.realm.Realm.init
 
 class GithubRepositoryAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
+
     var showLoadingItem: Boolean = true
         set(value){
-            if (showLoadingItem != value)
-                if (value){
+            if (showLoadingItem != value) {
+
+                if (value) {
                     addLoadingItem()
-                }else {
+                } else {
                     removeLoadingItem()
                 }
+            }
+            field = value
         }
 
     private var items: ArrayList<ViewType>
