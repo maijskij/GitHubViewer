@@ -6,6 +6,8 @@ import io.realm.Realm
 import io.realm.kotlin.createObject
 import io.realm.kotlin.where
 import kotlinx.coroutines.experimental.async
+import org.jetbrains.anko.doAsync
+import org.jetbrains.anko.uiThread
 
 class RealmDbApiImpl : DbApi {
 
@@ -61,5 +63,33 @@ class RealmDbApiImpl : DbApi {
 
         return offlineData
     }
+
+
+    interface OnDataFromDb{
+        fun onDataReceived(list: List<GitHubRepo>)
+    }
+
+     fun getOfflineData2(callback: OnDataFromDb)  {
+
+         doAsync {
+             val offlineData = ArrayList<GitHubRepo>()
+             Realm.getDefaultInstance().use {
+
+                 offlineData.addAll(
+                         it
+                                 .where<RealmRepoItem>()
+                                 .findAll()
+                                 .map { GitHubRepo(it.name ?: "") }
+                 )
+
+             }
+
+             callback.onDataReceived(offlineData)
+         }
+    }
+
+
+
+
 
 }

@@ -1,4 +1,4 @@
-package com.denis.githubviewer
+package com.denis.githubviewer.testutils
 
 
 import okhttp3.MediaType
