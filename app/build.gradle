@@ -61,13 +61,11 @@ dependencies {
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:0.19.3"
     implementation 'ru.gildor.coroutines:kotlin-coroutines-retrofit:0.8.2'
 
-    // Anko
-    implementation 'org.jetbrains.anko:anko-common:0.9'
-
 
     // Unit Tests
     testImplementation 'junit:junit:4.12'
-    testImplementation 'com.nhaarman:mockito-kotlin:1.5.0'
+    testImplementation "com.nhaarman:mockito-kotlin-kt1.1:1.5.0"
+    testImplementation "org.jetbrains.kotlin:kotlin-reflect:1.2.21"
 
     // UI Tests
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
